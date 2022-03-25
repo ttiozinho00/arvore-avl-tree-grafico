@@ -11,14 +11,24 @@ int altura_raiz(P_no no)
 	int h1, h2;
 	
 	if(no->esq != NULL)
+	{
 		h1 = altura_raiz(no->esq);
+	}
+
 	else
+	{
 		h1 = 0;
+	}
 	
 	if(no->dir != NULL)
+	{
 		h2 = altura_raiz(no->dir);
+	}
+
 	else 
+	{
 		h2 = 0;	
+	}
 	
 	return 1 + maior(h1, h2);
 }
@@ -54,12 +64,14 @@ P_no balanco_direita(P_no no, int *h)
 					no_aux1->balanco = 1;
 					*h = FALSE;
 				}
+
 				else
 				{
 					no->balanco = no_aux1->balanco = 0;
 				}
 				no = no_aux1;
 			}
+
 			else /*Rotação dupla a esquerda*/
 			{
 				printf("Rotacao dupla a esquerda. ");
@@ -73,13 +85,23 @@ P_no balanco_direita(P_no no, int *h)
 				
 				/*Atualização do balanço*/
 				if(no_aux2->balanco == -1)
+				{
 					no->balanco = 1;
-				else	
-					no->balanco = 0;
-				if(no_aux2->balanco == 1)
-					no_aux1->balanco = -1;
+				}
+
 				else
+				{
+                    no->balanco = 0;  
+				}	
+					
+				if(no_aux2->balanco == 1){
+					no_aux1->balanco = -1;
+				}
+
+				else
+				{
 					no_aux1->balanco = 0;
+				}
 				
 				no = no_aux2;
 				no_aux2->balanco = 0;
@@ -119,12 +141,14 @@ P_no balanco_esquerda(P_no no, int *h)
 					no_aux1->balanco = -1;
 					*h = FALSE;
 				}
+
 				else
 				{
 					no->balanco = no_aux1->balanco = 0;
 				}
 				no = no_aux1;
 			}
+
 			else
 			{
 				/*Rotação dupla a direita*/
@@ -139,14 +163,24 @@ P_no balanco_esquerda(P_no no, int *h)
 				
 				/*Atualização do balanço*/
 				if(no_aux2->balanco == 1)
+				{
 					no->balanco = -1;
+				}
+
 				else
+				{
 					no->balanco = 0;
-				
+				}
+		
 				if(no_aux2->balanco == -1)
+				{
 					no_aux1->balanco = 1;
+				}
+
 				else
+				{
 					no_aux1->balanco = 0;
+				}
 				
 				no = no_aux2;
 				no_aux2->balanco = 0;
@@ -159,15 +193,26 @@ P_no balanco_esquerda(P_no no, int *h)
 P_no busca_avl(P_no no, int valor)
 {
 	if(no == NULL)
+	{
 		return no;
+	}
+
 	else
 	{
 		if(no->valor == valor)
+		{
 			return no;
+		}
+
 		else if(no->valor < valor)
+		{
 			return busca_avl(no->esq, valor);
+		}
+
 		else 
+		{
 			return busca_avl(no->dir, valor);
+		}
 	}
 }
 
@@ -181,6 +226,7 @@ P_no deleta_avl(P_no no, int valor, int *h)
 		printf("Valor nao existe!");
 		return no;
 	}
+
 	else
 	{
 		if(valor < no->valor)
@@ -188,7 +234,9 @@ P_no deleta_avl(P_no no, int valor, int *h)
 			no->esq = deleta_avl(no->esq, valor, h);
 			
 			if(*h)
+			{
 				no = balanco_direita(no, h);
+			}
 		}
 		else
 		{
@@ -197,8 +245,11 @@ P_no deleta_avl(P_no no, int valor, int *h)
 				no->dir = deleta_avl(no->dir, valor, h);
 				
 				if(*h)
+				{
 					no = balanco_esquerda(no, h);
+				}
 			}
+
 			else
 			{
 				no_aux = no;
@@ -209,6 +260,7 @@ P_no deleta_avl(P_no no, int valor, int *h)
 					*h = TRUE;
 					free(no_aux);
 				}
+
 				else
 				{
 					if(no_aux->esq == NULL)
@@ -217,12 +269,15 @@ P_no deleta_avl(P_no no, int valor, int *h)
 						*h = TRUE;
 						free(no_aux);
 					}
+
 					else
 					{
 						no_aux->dir = deleta(no_aux->dir, no_aux, h);
 						
 						if(*h)
+						{
 							no = balanco_esquerda(no, h);
+						}
 					}
 				}
 			}
@@ -240,8 +295,11 @@ P_no deleta(P_no succ, P_no no, int *h)
 		succ->esq = deleta(succ->esq, no, h);
 		
 		if(*h)
+		{
 			succ = balanco_direita(succ, h);
+		}
 	}
+
 	else
 	{
 		aux = succ;
@@ -264,9 +322,14 @@ void imprime_arvore(P_no no, int coluna, int linha, int level, int lado)
 	
 	/*Ajuste do limite da coluna de acordo com o tamanho da tela*/
 	if (coluna_limite < 247)
+	{
 		coluna_limite = 128; 
+	}
+
 	else
+	{
 		coluna_limite = 256; 
+	}
 	
 	if (no != NULL)
 	{
@@ -292,6 +355,7 @@ void imprime_arvore(P_no no, int coluna, int linha, int level, int lado)
 						gotoxy(i, linha);
 						printf("%c", LIGACAO_SUPERIOR);
 					}
+
 					else if (i == (coluna+(distancia*2))) /*Ponto de encontro entre dois nós filhos*/
 					{
 						printf("%c", LIGACAO_SUPERIOR);
@@ -300,11 +364,13 @@ void imprime_arvore(P_no no, int coluna, int linha, int level, int lado)
 						{
 							gotoxy(i, linha-2);
 							printf("%c", LIGACAO_INFERIOR);
-						}
-							
+						}		
 					}
+
 					else
+					{
 						printf("%c", LINHA_HORIZONTAL);
+					}
 				}
 			}
 			
@@ -320,6 +386,7 @@ void imprime_arvore(P_no no, int coluna, int linha, int level, int lado)
 						gotoxy(i, linha);
 						printf("%c", LIGACAO_SUPERIOR);
 					}
+
 					else if (i == (coluna-(distancia*2))) /*Ponto de encontro entre dois nós filhos*/
 					{
 						printf("%c", LIGACAO_SUPERIOR);
@@ -331,8 +398,11 @@ void imprime_arvore(P_no no, int coluna, int linha, int level, int lado)
 						}
 					}
 						
-					else 
-						printf("%c", LINHA_HORIZONTAL);
+					else
+					{
+                        printf("%c", LINHA_HORIZONTAL);
+					} 
+						
 				}
 			}
 		}
@@ -358,7 +428,8 @@ P_no insere_avl(P_no no, int valor, int *h)
 		return no;
 		
 	}
-	else if (valor < no->valor)
+
+	else if(valor < no->valor)
 	{
 		no->esq = insere_avl(no->esq, valor, h);
 		
@@ -398,13 +469,23 @@ P_no insere_avl(P_no no, int valor, int *h)
 						
 						/*Atualização do balanco*/
 						if (no_aux2->balanco == 1)
+						{
 							no->balanco = -1;
+						}
+
 						else
+						{
 							no->balanco = 0;
+						}
 						if (no_aux2->balanco == -1)
+						{
 							no->balanco = 1;
+						}
+
 						else
+						{
 							no_aux->balanco = 0;
+						}
 						
 						no = no_aux2;
 					}
@@ -414,6 +495,7 @@ P_no insere_avl(P_no no, int valor, int *h)
 			}
 		}
 	}
+
 	else if (valor > no->valor)
 	{
 		no->dir = insere_avl(no->dir, valor, h);
@@ -441,6 +523,7 @@ P_no insere_avl(P_no no, int valor, int *h)
 						no->balanco = 0;
 						no = no_aux;
 					}
+
 					else /*Rotação dupla a esquerda*/
 					{
 						printf("Rotacao dupla a esquerda. ");
@@ -454,13 +537,24 @@ P_no insere_avl(P_no no, int valor, int *h)
 						
 						/*Atualização do balanço*/
 						if (no_aux2->balanco == -1)
+						{
 							no->balanco = 1;
+						}
+
 						else
+						{
 							no->balanco = 0;
+						}
+
 						if (no_aux2->balanco == 1)
+						{
 							no->balanco = -1;
+						}
+
 						else
+						{
 							no_aux->balanco = 0;
+						}
 						
 						no = no_aux2;
 					}
@@ -483,9 +577,14 @@ P_no insere_avl(P_no no, int valor, int *h)
 int maior(int a, int b)
 {
 	if (a > b)
+	{
 		return a;
+	}
+
 	else 
+	{
 		return b;
+	}
 }
 
 /*Cria um novo nó*/
@@ -511,7 +610,9 @@ void quadrado(int valor, int coluna, int linha)
 	
 	/*Reserva um espaço a mais, caso o número seja negativo*/
 	if (valor < 0)
+	{
 		numero_digitos++;
+	}
 
 	coluna = coluna - (ceil(numero_digitos/2));
 	
@@ -519,7 +620,9 @@ void quadrado(int valor, int coluna, int linha)
 	printf("%c", CANTO_SUPERIOR_ESQUERDO);
 	
 	for (i = 0; i < numero_digitos; i++)
+	{
 		printf("%c", LINHA_HORIZONTAL);
+	}
 	
 	printf("%c", CANTO_SUPERIOR_DIREITO);
 	printf("\n");
@@ -536,7 +639,9 @@ void quadrado(int valor, int coluna, int linha)
 	printf("%c", CANTO_INFERIOR_ESQUERDO);
 	
 	for (i = 0; i < numero_digitos; i++)
+	{
 		printf("%c", LINHA_HORIZONTAL);
+	}
 	
 	printf("%c", CANTO_INFERIOR_DIREITO);
 	printf("\n");
@@ -548,7 +653,10 @@ int quantidade_digitos(int valor)
 	int contador = 0;
 	
 	if(valor == 0)
+	{
 		return 1;
+	}
+
 	else
 	{
 		while(valor != 0)
@@ -559,13 +667,3 @@ int quantidade_digitos(int valor)
 	}
 	return contador;
 }
-
-
-
-
-
-
-
-
-
-

@@ -26,9 +26,14 @@ int main(int argc, char *argv[])
 	
 	/*limite da área de impressão da árvore, de acordo com o tamanho da tela*/
 	if(coluna_limite < 200)
+	{
 		coluna_limite = 128; 
+	}
+	
 	else
+	{
 		coluna_limite = 256; 
+	}
 	
 	centro = (coluna_limite/2) + ((max_dimensao.X - coluna_limite)/2) ;
 	
@@ -40,12 +45,17 @@ int main(int argc, char *argv[])
 		
 		gotoxy(1, 10);
 		for(i = 0; i < max_dimensao.X; i++)
+		{
 			printf("%c", LINHA_HORIZONTAL);
+		}
 		
 		imprime_arvore(raiz, centro, 11, level, 0); /*Imprime a árvore antes da operação*/
 		
-		if(raiz) 
+		if(raiz)
+		{
 			fim_arvore_antes = altura_raiz(raiz); /* Calcula a altura da raiz, para localizar o final da mesma*/
+		} 
+			
 		
 		gotoxy(1, 1);
 		printf("1- Inserir\n");
@@ -75,9 +85,14 @@ int main(int argc, char *argv[])
 				raiz_busca = busca_avl(raiz_busca, valor);
 				
 				if(raiz_busca)
+				{
 					printf("Valor encontrado: %d", raiz_busca->valor);
+				}
+				
 				else
+				{
 					printf("Valor nao encontrado.");
+				}
 				break;
 			case 4:
 				flag = 0;
