@@ -2,7 +2,9 @@
 
 # metodo de compilar 
 
+```
 gcc -o AVL2 AVL2.c conio_v3.2.4.c console_v1.5.4.c funcoes.c -Wall -pedantic -Wextra 
+```
 
 
 # programa árvore AVL
